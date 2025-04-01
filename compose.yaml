@@ -1,0 +1,10 @@
+name: project
+services:
+    vuegridstack-vuedash:
+        annotations:
+            compose.score.dev/workload-name: vuegridstack
+        hostname: vuegridstack
+        image: vuegridstack:1234
+        ports:
+            - target: 80
+              published: "8080"

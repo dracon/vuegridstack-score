@@ -1,0 +1,54 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+    annotations:
+        k8s.score.dev/workload-name: vuegridstack
+    creationTimestamp: null
+    labels:
+        app.kubernetes.io/instance: vuegridstack-b36dfd8686
+        app.kubernetes.io/managed-by: score-k8s
+        app.kubernetes.io/name: vuegridstack
+    name: vuegridstack
+spec:
+    ports:
+        - name: web
+          port: 80
+          protocol: TCP
+          targetPort: 8080
+    selector:
+        app.kubernetes.io/instance: vuegridstack-b36dfd8686
+status:
+    loadBalancer: {}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    annotations:
+        k8s.score.dev/workload-name: vuegridstack
+    creationTimestamp: null
+    labels:
+        app.kubernetes.io/instance: vuegridstack-b36dfd8686
+        app.kubernetes.io/managed-by: score-k8s
+        app.kubernetes.io/name: vuegridstack
+    name: vuegridstack
+spec:
+    selector:
+        matchLabels:
+            app.kubernetes.io/instance: vuegridstack-b36dfd8686
+    strategy: {}
+    template:
+        metadata:
+            annotations:
+                k8s.score.dev/workload-name: vuegridstack
+            creationTimestamp: null
+            labels:
+                app.kubernetes.io/instance: vuegridstack-b36dfd8686
+                app.kubernetes.io/managed-by: score-k8s
+                app.kubernetes.io/name: vuegridstack
+        spec:
+            containers:
+                - image: vuegridstack:1234
+                  name: vuedash
+                  resources: {}
+status: {}

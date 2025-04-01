@@ -25,7 +25,10 @@ dist-ssr
 
 
 # score
-./.score-compose/
-./.score-k8s/
+.score-compose/
+.score-k8s/
 
 .envrc
+
+# vscode
+.vscode
