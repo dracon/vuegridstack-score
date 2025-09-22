@@ -3,7 +3,7 @@ metadata:
   name: vuegridstack
 containers:
   vuedash:
-    image: vuegridstack:1234
+    image: localhost:32000/vuegridstack:1234
 service:
   ports:
     web:

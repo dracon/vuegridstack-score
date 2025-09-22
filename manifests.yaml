@@ -15,7 +15,7 @@ spec:
         - name: web
           port: 80
           protocol: TCP
-          targetPort: 8080
+          targetPort: 80
     selector:
         app.kubernetes.io/instance: vuegridstack-b36dfd8686
 status:
@@ -48,7 +48,7 @@ spec:
                 app.kubernetes.io/name: vuegridstack
         spec:
             containers:
-                - image: vuegridstack:1234
+                - image: localhost:32000/vuegridstack:1234
                   name: vuedash
                   resources: {}
 status: {}
