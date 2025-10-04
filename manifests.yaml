@@ -48,7 +48,7 @@ spec:
                 app.kubernetes.io/name: vuegridstack
         spec:
             containers:
-                - image: localhost:32000/vuegridstack:1234
+                - image: localhost:32000/vuegridstack:2345
                   name: vuedash
                   resources: {}
 status: {}
