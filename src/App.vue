@@ -1,31 +1,26 @@
 <template>
   <main>
-    <button type="button" @click="addNewWidget">Add Widget</button> {{ info }}
+    <button type="button" @click="addNewWidget">Add Widget</button>
+    {{ info }}
     <div class="grid-stack"></div>
   </main>
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount, h, render } from 'vue'
+import {ref, onMounted, onBeforeUnmount, h, render} from 'vue'
 import GridItemComponent from './components/GridItemComponent.vue'
-import { GridStack } from 'gridstack'
+import {GridStack} from 'gridstack'
 
+
+import {useDashbordStore} from "@/useDashboardStore.js"
+
+const store = useDashbordStore()
 const info = ref('')
 let grid = null
-const items = [
-  { "id": 1, "x": 0, "y": 0, "w": 4, "h": 2, "content": "HOLY maccaroni" }, 
-  { "id": 2, "x": 4, "y": 0, "w": 6, "h": 2, "content": "Widget 2" }, 
-  { "id": 3, "x": 4, "y": 2, "w": 2, "h": 2, "content": "Widget 3" }, 
-  { "id": 4, "x": 0, "y": 2, "w": 3, "h": 4, "content": "Widget 4" }, 
-  { "id": 5, "x": 6, "y": 2, "w": 6, "h": 2, "content": "Widget 5" }
-]
 
-
-
-
-
-
-let count = ref(items.length)
+const items = store.items
+console.log(items)
+let count = items.length
 const shadowDom = {}
 
 onMounted(() => {
@@ -35,12 +30,14 @@ onMounted(() => {
     minRow: 1
   })
 
+
   // Listen for remove events to clean up Vue renders
   grid.on('removed', function (event, items) {
     items.forEach((item) => {
       if (shadowDom[item.id]) {
         render(null, shadowDom[item.id])
         delete shadowDom[item.id]
+        store.removeItem(item.id)
       }
     })
   })
@@ -61,9 +58,12 @@ onMounted(() => {
 
     shadowDom[itemId] = el
     render(widgetNode, el)
+
   }
 
   grid.load(items)
+  info.value = `${items.length} widgets loaded`
+  store.saveItems(items)
 })
 
 onBeforeUnmount(() => {
@@ -73,16 +73,18 @@ onBeforeUnmount(() => {
 })
 
 function addNewWidget() {
-  const node = items[count.value] || {
+  const node = items[count + 1] || {
     x: Math.round(12 * Math.random()),
     y: Math.round(5 * Math.random()),
     w: Math.round(1 + 3 * Math.random()),
     h: Math.round(1 + 3 * Math.random()),
-    content: `Widget ${count.value + 1}`
+    content: `Widget ${count + 1}`
   }
-  node.id = String(count.value++)
+  console.log('', count)
+  node.id = String(count++)
   grid.addWidget(node)
   info.value = `Widget ${node.id} added`
+  store.addItem(node)
 }
 </script>
 
