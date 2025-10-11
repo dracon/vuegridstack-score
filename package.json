@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "gridstack": "^12.3.3",
+    "pinia": "^3.0.3",
     "vue": "^3.4.0"
   },
   "devDependencies": {
