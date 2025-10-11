@@ -20,7 +20,7 @@ let grid = null
 
 const items = store.items
 console.log(items)
-let count = items.length
+let count = items.length > 0 ? Math.max(...items.map(item => item.id)) + 1 : 0
 const shadowDom = {}
 
 onMounted(() => {
@@ -42,6 +42,19 @@ onMounted(() => {
     })
   })
 
+  grid.on('change', function (event, items) {
+    items.forEach((item) => {
+      store.updateItem({
+        id: item.id,
+        x: item.x,
+        y: item.y,
+        w: item.w,
+        h: item.h,
+        content: item.content
+      })
+    })
+  })
+
   GridStack.renderCB = function (el, widget) {
     const gridItemEl = el.closest('.grid-stack-item')
     const itemId = widget.id
@@ -58,7 +71,6 @@ onMounted(() => {
 
     shadowDom[itemId] = el
     render(widgetNode, el)
-
   }
 
   grid.load(items)
@@ -73,18 +85,19 @@ onBeforeUnmount(() => {
 })
 
 function addNewWidget() {
-  const node = items[count + 1] || {
+  const node = {
     x: Math.round(12 * Math.random()),
     y: Math.round(5 * Math.random()),
     w: Math.round(1 + 3 * Math.random()),
     h: Math.round(1 + 3 * Math.random()),
-    content: `Widget ${count + 1}`
+    content: `Widget ${count}`
   }
   console.log('', count)
-  node.id = String(count++)
+  node.id = String(count)
   grid.addWidget(node)
   info.value = `Widget ${node.id} added`
   store.addItem(node)
+  count++
 }
 </script>
 
