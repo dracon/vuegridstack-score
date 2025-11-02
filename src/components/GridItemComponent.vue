@@ -36,7 +36,7 @@ function handleRemove() {
 
 <style>
 .grid-stack-item-content {
-  background-color: #222266 !important;
+  background-color: #222266 !important; 
   color: #afafaf;
   padding: 1rem;
   position: relative;
