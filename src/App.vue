@@ -1,8 +1,11 @@
 <template>
   <main>
-    <button type="button" @click="addNewWidget">Add Widget</button>
-    {{ info }}
+    <div class="top-container">
+      <button class="btn" type="button" @click="addNewWidget">Add Widget</button>
+      {{ info }}
+    </div>
     <div class="grid-stack"></div>
+
   </main>
 </template>
 
@@ -103,4 +106,12 @@ function addNewWidget() {
 
 <style>
 @import 'assets/demo.css';
+
+.top-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+}
 </style>
